@@ -92,12 +92,10 @@
 
         const data = await response.json();
 
-        // Filter berdasarkan Provinsi ID = 11 (Aceh), Kabupaten/Kota ID = 1171 (Banda Aceh)
         const filtered = data.resource.filter(item => {
             return item.provinsi_id == 11 && item.kabupaten_id == 1171 && item.tenagakerja.toLowerCase().includes("sopir");
         });
 
-        // Tampilkan hasil dalam tabel
         let html = `
             <table border="1" cellpadding="5">
                 <thead>
@@ -139,7 +137,6 @@
 
 
     function hargaTenagaKerja(dataTenagaKerja) {
-        // Filter hanya ambil properti provinsi, kabkota, harga_oh, dan tenagakerja
         const cleanedData = dataTenagaKerja.map(item => ({
             provinsi: item.provinsi,
             kabkota: item.kabupaten,
@@ -147,10 +144,8 @@
             tenagakerja: item.tenagakerja
         }));
 
-        // Urutkan berdasarkan harga_oh dari tertinggi ke terendah
         cleanedData.sort((a, b) => b.harga_oh - a.harga_oh);
 
-        // Kelompokkan berdasarkan harga_oh
         const grouped = {};
         cleanedData.forEach(item => {
             const key = item.harga_oh;
@@ -185,7 +180,6 @@
         const data = await response.json();
         const hasilKelompok = hargaTenagaKerja(data.resource);
 
-        // Tampilkan hasil kelompok (opsional)
         let html = "<h3>Hasil Kelompok Berdasarkan Harga OH</h3>";
         for (const harga in hasilKelompok) {
             html += `<h4>Harga OH: ${harga}</h4><ul>`;
